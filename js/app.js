@@ -143,7 +143,7 @@ let settings = { ideasPerDay: 12 };
 /* AI backend: this static site can't safely hold an API key, so AI calls go to a small
    Cloudflare Worker you deploy yourself (see README.md → "Enabling real AI on GitHub Pages").
    Paste your deployed Worker's URL below once you have it. */
-const AI_ENDPOINT = "ramble-ventures-ai.eshunburge.workers.dev";
+const AI_ENDPOINT = "https://ramble-ventures-ai.eshunburge.workers.dev";
 const AI_AVAILABLE = typeof AI_ENDPOINT === "string" && AI_ENDPOINT.length > 0 && !AI_ENDPOINT.includes("YOUR-WORKER-SUBDOMAIN");
 
 async function callAI(prompt, data){
