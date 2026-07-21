@@ -2,6 +2,12 @@
 
 A branded marketing dashboard for planning MetaSlider (WordPress slideshow/gallery plugin) YouTube content: daily AI-generated video ideas, a to-do list, a searchable video library, and an AI chat assistant.
 
+## Launch Product
+
+```
+https://eshunburge.github.io/ramble-ventures-marketing/
+```
+
 ## Project structure
 
 ```
