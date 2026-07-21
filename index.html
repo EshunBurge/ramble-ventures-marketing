@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ramble Ventures Marketing — MetaSlider Dashboard</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="rv-topstrip"></div>
+
+<div class="rv-app">
+
+  <aside class="rv-sidebar">
+    <div class="rv-sidebar-logo">
+      <svg width="34" height="34" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="100" height="100" rx="24" fill="#2A4A93"/>
+        <path d="M27 24 H50 C61 24 68 30 68 40 C68 48 63 53 55 55 L72 76 H58 L44 57 H39 V76 H27 Z M39 34 V47 H49 C55 47 58 44 58 40 C58 36 55 34 49 34 Z" fill="#FFFFFF"/>
+        <path d="M50 76 L68 40 H79 L58 82 Z" fill="#FFFFFF"/>
+      </svg>
+      <div class="rv-word">
+        <strong>RAMBLE VENTURES</strong>
+        <span>MARKETING</span>
+      </div>
+    </div>
+    <nav class="rv-nav" id="rv-nav">
+      <button class="rv-nav-item active" data-section="ideas">Video Ideas</button>
+      <button class="rv-nav-item" data-section="todo">To-Do List</button>
+      <button class="rv-nav-item" data-section="library">Video Library</button>
+    </nav>
+    <div class="rv-sidebar-footer">MetaSlider Content Engine</div>
+  </aside>
+
+  <main class="rv-main">
+
+    <section class="rv-section active" id="section-ideas">
+      <h1 class="rv-page-title">Video Ideas</h1>
+      <div class="rv-ai-notice">AI-assisted features (regenerate ideas &amp; chat) need a small backend configured first — see README.md → "Enabling real AI on GitHub Pages" for setup steps.</div>
+      <section class="rv-card" id="ideas-section">
+        <div class="rv-section-head">
+          <div>
+            <h2 id="ideas-heading">Today's Video Ideas</h2>
+            <p class="rv-sub" id="ideas-date-label">Generated for —</p>
+          </div>
+          <button class="rv-btn secondary" id="regen-btn" onclick="regenerateIdeas('')">Refresh Ideas</button>
+        </div>
+        <div class="rv-ideas-grid" id="ideas-grid"></div>
+
+        <div class="rv-tweak-box">
+          <label>Not quite right? Tell the AI what to change, then regenerate:</label>
+          <textarea id="tweak-input" placeholder="e.g. focus more on the new Gallery plugin, make these more beginner-friendly, avoid anything about carousels..."></textarea>
+          <div class="rv-tweak-actions">
+            <span id="regen-status" class="rv-loading"></span>
+            <button class="rv-btn" onclick="regenerateIdeas(document.getElementById('tweak-input').value)">Regenerate with feedback</button>
+          </div>
+        </div>
+        <p class="rv-sync-note">Ideas are based on the MetaSlider blog/docs and cross-checked against videos already made. Refreshed automatically once a day, or on demand above.</p>
+      </section>
+    </section>
+
+    <section class="rv-section" id="section-todo">
+      <h1 class="rv-page-title">To-Do List</h1>
+      <section class="rv-card" id="todo-section">
+        <div class="rv-section-head">
+          <div>
+            <h2>Video To-Do List</h2>
+            <p class="rv-sub">Ideas you've selected to produce. Check them off as you finish.</p>
+          </div>
+        </div>
+        <div class="rv-todo-actions">
+          <button class="rv-btn secondary" onclick="clearCompletedTodos()">Clear completed</button>
+          <button class="rv-btn danger" onclick="clearAllTodos()">Clear all</button>
+          <span id="regen-status-todo" class="rv-loading"></span>
+        </div>
+        <ul class="rv-todo-list" id="todo-list"></ul>
+        <p class="rv-empty" id="todo-empty">No ideas added yet — click "Add to To-Do" on any idea in the Video Ideas tab.</p>
+      </section>
+    </section>
+
+    <section class="rv-section" id="section-library">
+      <h1 class="rv-page-title">Video Library</h1>
+      <section class="rv-card" id="library-section">
+        <div class="rv-section-head">
+          <div>
+            <h2>Video Library</h2>
+            <p class="rv-sub">Videos already published on the MetaSlider YouTube channel.</p>
+          </div>
+        </div>
+        <div class="rv-lib-controls">
+          <input type="text" id="lib-search" placeholder="Search titles or categories..." oninput="renderLibrary()">
+          <select id="lib-category" onchange="renderLibrary()"><option value="">All categories</option></select>
+          <select id="lib-views" onchange="renderLibrary()">
+            <option value="">All view counts</option>
+            <option value="0-500">Under 500 views</option>
+            <option value="500-2000">500 – 2,000 views</option>
+            <option value="2000-5000">2,000 – 5,000 views</option>
+            <option value="5000-999999999">5,000+ views</option>
+          </select>
+          <select id="lib-sort" onchange="renderLibrary()">
+            <option value="views-desc">Most views</option>
+            <option value="views-asc">Fewest views</option>
+            <option value="title-asc">Title A–Z</option>
+            <option value="category-asc">Category A–Z</option>
+          </select>
+        </div>
+        <div class="rv-lib-grid" id="library-grid"></div>
+        <p class="rv-sync-note" id="sync-note"></p>
+      </section>
+    </section>
+
+  </main>
+</div>
+
+<button id="rv-chat-toggle" onclick="toggleChat()">Chat</button>
+<div id="rv-chat-panel">
+  <header><span><span class="rv-dot"></span>Ramble Ventures AI Assistant</span><span style="cursor:pointer" onclick="toggleChat()">Close</span></header>
+  <div id="rv-chat-messages"></div>
+  <div id="rv-chat-input-row">
+    <input type="text" id="chat-input" placeholder="Ask about ideas, videos, strategy..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
